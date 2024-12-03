@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import TemplateForm from './components/TemplateForm';
 import TemplateList from './components/TemplateList';
+import BASE_URL from './config';
 
 function App() {
     const [templates, setTemplates] = useState([]);
@@ -13,13 +14,13 @@ function App() {
     }, []);
 
     const fetchTemplates = async () => {
-        const response = await fetch('http://localhost:5001/api/templates');
+        const response = await fetch(`${BASE_URL}/api/templates`);
         const data = await response.json();
         setTemplates(data);
     };
 
     const createTemplate = async (template) => {
-        const response = await fetch('http://localhost:5001/api/templates', {
+        const response = await fetch(`${BASE_URL}/api/templates`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(template),
@@ -32,7 +33,7 @@ function App() {
     };
 
     const updateTemplate = async (template) => {
-        const response = await fetch(`http://localhost:5001/api/templates/${template._id}`, {
+        const response = await fetch(`${BASE_URL}/api/templates/${template._id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(template),
@@ -47,7 +48,7 @@ function App() {
     };
 
     const deleteTemplate = async (id) => {
-        const response = await fetch(`http://localhost:5001/api/templates/${id}`, { method: 'DELETE' });
+        const response = await fetch(`${BASE_URL}/api/templates/${id}`, { method: 'DELETE' });
 
         if (response.ok) {
             fetchTemplates();
